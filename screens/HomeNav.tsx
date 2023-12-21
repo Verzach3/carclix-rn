@@ -6,6 +6,7 @@ import IonIcons from "@expo/vector-icons/Ionicons"
 import Home from "./Home";
 import Sell from "./Sell";
 import Account from "./Account";
+import { SafeAreaView } from "react-native-safe-area-context";
 const HomeNav = () => {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
@@ -20,7 +21,7 @@ const HomeNav = () => {
   ]);
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
     <BottomNavigation
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
@@ -30,7 +31,7 @@ const HomeNav = () => {
         account: Account,
       })}
       />
-      </>
+      </SafeAreaView>
   );
 };
 
