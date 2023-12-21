@@ -11,7 +11,7 @@ import HomeNav from "./screens/HomeNav";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PocketBase, { AsyncAuthStore } from "pocketbase";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
+import { SafeAreaProvider } from "react-native-safe-area-context";
 // modify the global object to include the PocketBase instance
 declare global {
   namespace globalThis {
@@ -42,24 +42,26 @@ const theme = {
 
 export default function App() {
   return (
+    <SafeAreaProvider>
       <NavigationContainer>
-        <GestureHandlerRootView style={{ flex: 1}}>
-
-        <PaperProvider theme={theme}>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerShown: false }}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          <PaperProvider theme={theme}>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerShown: false }}
               />
-            <Stack.Screen
-              name="Home"
-              component={HomeNav}
-              options={{ headerShown: false }}
+              <Stack.Screen
+                name="Home"
+                component={HomeNav}
+                options={{ headerShown: false }}
               />
-          </Stack.Navigator>
-        </PaperProvider>
-              </GestureHandlerRootView>
+            </Stack.Navigator>
+          </PaperProvider>
+        </GestureHandlerRootView>
       </NavigationContainer>
+      <ExpoStatusBar style="auto" hidden={false} />
+    </SafeAreaProvider>
   );
 }

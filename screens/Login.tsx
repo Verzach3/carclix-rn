@@ -1,53 +1,178 @@
-import { View, StyleSheet, Image } from "react-native";
-import React from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { Button, TextInput, Text, Avatar } from "react-native-paper";
-
+import { Formik } from "formik";
+import { StatusBar } from "react-native";
 const Login = () => {
   const navigation = useNavigation<any>();
-
+  const [isRegister, setIsRegister] = useState(false);
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={require("../assets/logo_cropped.png")}
-      />
-      <TextInput
-        mode="outlined"
-        style={styles.inputs}
-        label={"Email"}
-        placeholder="Tu Email"
-      />
-      <TextInput
-        mode="outlined"
-        style={styles.inputs}
-        label={"Contraseña"}
-        placeholder="Tu Contraseña"
-      />
-      <Button mode="outlined" onPress={() => navigation.navigate("Home")}>
-        Login
-      </Button>
-      <View style={styles.textContainer}>
-        <Text style={styles.texts}>
-          ¿No tienes cuenta?{" "}
-          <Text
-            style={styles.textLink}
-            onPress={() => navigation.navigate("Register")}
-          >
-            Registrate
+    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight}}>
+      <ScrollView style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={require("../assets/logo_cropped.png")}
+        />
+        <Formik
+          initialValues={{
+            firstname: "",
+            lastname: "",
+            address: "",
+            phone: "",
+            email: "",
+            password: "",
+            confirmpassword: "",
+            city: "",
+            dateofbirth: "",
+            gender: "",
+            contactpreference: "",
+            cedula: "",
+          }}
+          onSubmit={(values) => {
+            console.log(values);
+            navigation.navigate("Home");
+          }}
+        >
+          {({
+            values,
+            handleChange,
+            handleSubmit,
+            errors,
+            touched,
+            setFieldValue,
+          }) => (
+            <>
+              {isRegister && (
+                <>
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Nombre"}
+                    placeholder="Tu Nombre"
+                    onChangeText={handleChange("firstname")}
+                    value={values.firstname}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Apellido"}
+                    placeholder="Tu Apellido"
+                    onChangeText={handleChange("lastname")}
+                    value={values.lastname}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Telefono"}
+                    placeholder="Tu Telefono"
+                    onChangeText={handleChange("phone")}
+                    value={values.phone}
+                  />
+                </>
+              )}
+              <TextInput
+                mode="outlined"
+                style={styles.inputs}
+                label={"Email"}
+                placeholder="Tu Email"
+                onChangeText={handleChange("email")}
+                value={values.email}
+              />
+              <TextInput
+                mode="outlined"
+                style={styles.inputs}
+                label={"Contraseña"}
+                placeholder="Tu Contraseña"
+                onChangeText={handleChange("password")}
+                value={values.password}
+              />
+              {isRegister && (
+                <>
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Contraseña"}
+                    placeholder="Tu Contraseña"
+                    onChangeText={handleChange("confirmpassword")}
+                    value={values.confirmpassword}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Ciudad"}
+                    placeholder="Tu Ciudad"
+                    onChangeText={handleChange("city")}
+                    value={values.city}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Fecha de Nacimiento"}
+                    placeholder="Tu Fecha de Nacimiento"
+                    onChangeText={handleChange("dateofbirth")}
+                    value={values.dateofbirth}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Genero"}
+                    placeholder="Tu Genero"
+                    onChangeText={handleChange("gender")}
+                    value={values.gender}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Preferencia de Contacto"}
+                    placeholder="Tu Preferencia de Contacto"
+                    onChangeText={handleChange("contactpreference")}
+                    value={values.contactpreference}
+                  />
+                  <TextInput
+                    mode="outlined"
+                    style={styles.inputs}
+                    label={"Cedula"}
+                    placeholder="Tu Cedula"
+                    onChangeText={handleChange("cedula")}
+                    value={values.cedula}
+                  />
+                </>
+              )}
+              <Button mode="outlined" onPress={() => handleSubmit()}>
+                Login
+              </Button>
+            </>
+          )}
+        </Formik>
+        <View style={styles.textContainer}>
+          <Text style={styles.texts}>
+            {!isRegister ? `¿No tienes cuenta?` : `¿Ya tienes cuenta?`}{" "}
+            <Text
+              style={styles.textLink}
+              onPress={() => setIsRegister((prev) => !prev)}
+            >
+              {!isRegister ? `Registrate` : `Inicia Sesion`}
+            </Text>
           </Text>
-        </Text>
-        <Text style={styles.texts}>
-          ¿Olvidaste tu contraseña?{" "}
-          <Text
-            style={styles.textLink}
-            onPress={() => navigation.navigate("ForgotPassword")}
-          >
-            Recuperar contraseña
+          <Text style={Object.assign({}, styles.texts, { marginBottom: 20 })}>
+            ¿Olvidaste tu contraseña?{" "}
+            <Text
+              style={styles.textLink}
+              onPress={() => navigation.navigate("ForgotPassword")}
+            >
+              Recuperar contraseña
+            </Text>
           </Text>
-        </Text>
-      </View>
-    </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -55,7 +180,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignContent: "center",
-    padding: 20,
+    paddingHorizontal: 20,
   },
   inputs: {
     marginBottom: 20,

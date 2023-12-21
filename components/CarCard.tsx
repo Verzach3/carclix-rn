@@ -4,10 +4,13 @@ import { Button, Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 
 const CarCard = () => {
-  const navigation = useNavigation<any>()
+  const navigation = useNavigation<any>();
   return (
     <View>
-      <Card style={{ marginHorizontal: 5, marginVertical: 5, borderRadius: 5 }} onPress={() => navigation.navigate("CarDetails")}>
+      <Card
+        style={{ marginHorizontal: 5, marginVertical: 5, borderRadius: 5 }}
+        onPress={() => navigation.navigate("CarDetails")}
+      >
         <Card.Cover
           style={{ borderRadius: 5 }}
           source={{ uri: "https://picsum.photos/700" }}
