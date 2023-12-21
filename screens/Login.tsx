@@ -5,16 +5,20 @@ import {
   ScrollView,
   SafeAreaView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Button, TextInput, Text, Avatar } from "react-native-paper";
+import { Button, TextInput, Text } from "react-native-paper";
 import { Formik } from "formik";
 import { StatusBar } from "react-native";
+import { login } from "../services/auth";
+import { z } from "zod";
+import { loginValidation } from "../validations/loginValidation";
 const Login = () => {
   const navigation = useNavigation<any>();
   const [isRegister, setIsRegister] = useState(false);
+  useEffect(() => {}, []);
   return (
-    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight}}>
+    <SafeAreaView style={{ flex: 1, paddingTop: StatusBar.currentHeight }}>
       <ScrollView style={styles.container}>
         <Image
           style={styles.logo}
@@ -35,9 +39,16 @@ const Login = () => {
             contactpreference: "",
             cedula: "",
           }}
-          onSubmit={(values) => {
-            console.log(values);
-            navigation.navigate("Home");
+          onSubmit={async (values) => {
+            try {
+              const success = await login(values.email, values.password);
+              console.log(`success: ${success}`);
+              if (success) {
+                navigation.navigate("Home");
+              }
+            } catch (error) {
+              console.log(JSON.stringify(error));
+            }
           }}
         >
           {({
@@ -169,6 +180,12 @@ const Login = () => {
             >
               Recuperar contraseña
             </Text>
+          </Text>
+          <Text
+            style={styles.textLink}
+            onPress={() => navigation.navigate("Home")}
+          >
+            Ir a Home
           </Text>
         </View>
       </ScrollView>
