@@ -7,7 +7,7 @@ const Stack = createStackNavigator();
 
 const SellNavigator = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Sell" component={Sell} />
       <Stack.Screen name="Insurance" component={Insurance} />
     </Stack.Navigator>

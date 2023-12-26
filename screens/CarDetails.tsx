@@ -7,7 +7,7 @@ import Carousel from "react-native-reanimated-carousel";
 
 const CarDetails = () => {
   return (
-    <ScrollView>
+    <ScrollView style={{}}>
       <Carousel
         width={500}
         height={500 / 2}

@@ -26,7 +26,7 @@ const Home = () => {
         component={CarsScreen}
         options={{ headerShown: false }}
       />
-      <Stack.Screen name="CarDetails" component={CarDetails} />
+      <Stack.Screen name="CarDetails" component={CarDetails} options={{ headerShown: false}} />
       <Stack.Screen name="NewsDetails" component={NewsDetailsScreen} />
     </Stack.Navigator>
   );
