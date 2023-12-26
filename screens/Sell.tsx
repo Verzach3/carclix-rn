@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { ScrollView, View, Image, StyleSheet} from "react-native";
+import { ScrollView, View, Image, StyleSheet } from "react-native";
 import { Portal, Dialog, SegmentedButtons, Text, TextInput, Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
+import { Checkbox } from 'react-native-paper';
 
 const Sell = () => {
 
@@ -18,6 +19,7 @@ const Sell = () => {
   const [vin, setVin] = useState<string>("");
   const [visible, setVisible] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
+  const [hasInsurance, setHasInsurance] = useState(false);
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -36,6 +38,7 @@ const Sell = () => {
   };
 
   const handleSubmission = async () => {
+
     const data = new FormData();
     data.append("model", model);
     data.append("kilometraje", kilometraje);
@@ -204,22 +207,37 @@ const Sell = () => {
             );
           })}
       </View>
+      <View style={styles.checkboxContainer}>
+        <Checkbox
+          status={hasInsurance ? 'checked' : 'unchecked'}
+          onPress={() => {
+            setHasInsurance(!hasInsurance);
+          }}
+        />
+        <Text style={styles.checkboxLabel}>¿Tiene seguro para el vehículo?</Text>
+      </View>
 
-      <Button
-        style={{ marginTop: 20, marginBottom: 30 }}
-        mode="contained"
-        onPress={handleSubmission}
-      >
-        Publicar
-      </Button>
+      {/* Botón condicional basado en el estado del seguro */}
+      {
+        hasInsurance ? (
+          <Button
+            style={{ marginTop: 20, marginBottom: 30 }}
+            mode="contained"
+            onPress={() => navigation.navigate("Insurance")}
+          >
+            Ir a Seguro de Vehículo
+          </Button>
+        ) : (
+          <Button
+            style={{ marginTop: 20, marginBottom: 30 }}
+            mode="contained"
+            onPress={handleSubmission}
+          >
+            Publicar
+          </Button>
+        )
+      }
 
-      <Button
-        style={{ marginTop: 20, marginBottom: 30 }}
-        mode="contained"
-        onPress={() => navigation.navigate("Insurance")} // Usa el nombre que le diste a la ruta Insurance
-      >
-        Ir a Seguro de Vehículo
-      </Button>
 
     </ScrollView>
   );
@@ -250,6 +268,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  checkboxLabel: {
+    marginLeft: 8,
+    fontSize: 16,
   },
 });
 

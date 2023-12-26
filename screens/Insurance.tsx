@@ -26,21 +26,6 @@ const Insurance = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Información del Seguro</Text>
 
-      <RadioButton.Group onValueChange={newValue => setHasInsurance(newValue === 'yes')} value={hasInsurance ? 'yes' : 'no'}>
-        <View style={styles.radioContainer}>
-          <Text>Tiene seguro:</Text>
-          <View style={styles.radioItem}>
-            <RadioButton value="yes" />
-            <Text style={styles.radioLabel}>Sí</Text>
-          </View>
-          <View style={styles.radioItem}>
-            <RadioButton value="no" />
-            <Text style={styles.radioLabel}>No</Text>
-          </View>
-        </View>
-      </RadioButton.Group>
-
-      {hasInsurance && (
         <View>
           <TextInput
             label="Tipo de seguro"
@@ -105,7 +90,7 @@ const Insurance = () => {
             Registrar Seguro
           </Button>
         </View>
-      )}
+  
     </ScrollView>
   );
 };
@@ -166,3 +151,4 @@ const styles = StyleSheet.create({
 });
 
 export default Insurance;
+
