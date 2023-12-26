@@ -61,7 +61,7 @@ export default function App() {
           </PaperProvider>
         </GestureHandlerRootView>
       </NavigationContainer>
-      <ExpoStatusBar style="auto" hidden={false} />
+      <ExpoStatusBar style="auto" />
     </SafeAreaProvider>
   );
 }

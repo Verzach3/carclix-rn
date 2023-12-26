@@ -26,7 +26,7 @@ const HomeNav = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <BottomNavigation.Navigator>
+      <BottomNavigation.Navigator style={{}}>
         <BottomNavigation.Screen
           name="home"
           component={Home}

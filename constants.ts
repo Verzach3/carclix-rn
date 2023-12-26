@@ -1,1 +1,1 @@
-export const SERVER_URL:string = "https://carclix-back.caprover.thepanas.me"
+export const SERVER_URL:string = "https://carclix-backend.caprover.thepanas.me"
