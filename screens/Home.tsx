@@ -1,5 +1,5 @@
 // Importaciones necesarias
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -17,6 +17,7 @@ import { RootStackParamList, NewsItem } from "../Types/navigationTypes";
 import Carousel from "react-native-reanimated-carousel";
 import { useState } from "react";
 import NewsDetailsScreen from "./NewsDetailsScreen";
+import { getVehicles } from "../services/vehicles";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -52,70 +53,26 @@ const Home = () => {
 };
 
 const HomeScreen = () => {
-  const [activeSlide, setActiveSlide] = useState(0);
+  const [vehicles, setVehicles] = useState<any>([]);
+  useEffect(() => {
+    getVehicles()
+      .then((data) => {
+        if (!vehicles.length) {
+          return;
+        }
+        setVehicles(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
-  const handlePressNews = (news: NewsItem) => {
-    navigation.navigate("NewsDetails", { news });
-  };
-  const windowWidth = useWindowDimensions().width;
   return (
     <ScrollView style={styles.container}>
       <Appbar.Header>
         <Appbar.Content title="Autos" />
       </Appbar.Header>
-      {/* CarCards */}
       <CarCard />
-      {/* Más CarCards... */}
-
-      {/* Sección de Noticias */}
-      <Text style={styles.newsHeader}>Últimas Noticias</Text>
-      <Carousel
-        data={newsData}
-        loop={false}
-        renderItem={({ item }) => (
-          <NewsCard
-            title={item.title}
-            description={item.description}
-            images={item.images}
-            date={item.date}
-            onPress={() => handlePressNews(item)}
-          />
-        )}
-        snapEnabled={true}
-        overscrollEnabled={false}
-        width={windowWidth}
-        height={windowWidth}
-        vertical={false}
-        //Esto desactiva el scroll del carousel en vertical para poder seguir bajando en la pantalla principal
-        panGestureHandlerProps={{
-          activeOffsetX: [-10, 10],
-        }}
-        onSnapToItem={(index) => setActiveSlide(index)}
-      />
-
-      {/* Botones de Redes Sociales */}
-      <View style={styles.socialMediaButtons}>
-        <IconButton
-          icon="facebook"
-          onPress={() => {
-            /* Abrir Facebook */
-          }}
-        />
-        <IconButton
-          icon="twitter"
-          onPress={() => {
-            /* Abrir Twitter */
-          }}
-        />
-        <IconButton
-          icon="instagram"
-          onPress={() => {
-            /* Abrir Instagram */
-          }}
-        />
-      </View>
     </ScrollView>
   );
 };
