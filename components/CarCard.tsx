@@ -18,11 +18,13 @@ const CarCard = ({ vehicle }: { vehicle: Vehicle }) => {
   return (
     <View>
       <Card
-        style={{ marginHorizontal: 5, marginVertical: 5, borderRadius: 5 }}
-        onPress={() => navigation.navigate("CarDetails")}
+        style={{ marginHorizontal: 10, marginVertical: 10, borderRadius: 0 }}
+        onPress={() => navigation.navigate("CarDetails", {
+          vehicleId: vehicle.id,
+        })}
       >
         <Card.Cover
-          style={{ borderRadius: 5 }}
+          style={{ borderRadius: 0 }}
           source={{
             uri: `${SERVER_URL}/vehicles/images/one/${vehicleImageId}`,
           }}
@@ -33,18 +35,9 @@ const CarCard = ({ vehicle }: { vehicle: Vehicle }) => {
             currency: "COP",
           }).format(Number(vehicle.purchase_price))}`}
           titleVariant="titleLarge"
+          subtitle={`${vehicle.vehicle_maker} ${vehicle.vehicle_model}`}
+          subtitleVariant="bodyLarge"
         />
-        {/* <Card.Title title={`${vehicle.vehicle_maker} ${vehicle.vehicle_model}`} subtitle={vehicle.vehicle_maker} /> */}
-        {/* <Text>$ {vehicle.purchase_price}</Text> */}
-        <Card.Actions>
-          <Button
-            mode="contained"
-            style={{ borderRadius: 10, marginVertical: 5 }}
-            icon={"shopping"}
-          >
-            Comprar
-          </Button>
-        </Card.Actions>
       </Card>
     </View>
   );
