@@ -1,11 +1,20 @@
 // Importaciones necesarias
-import React  from "react";
-import {} from "react-native";
+import React, { useState } from "react";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+  useWindowDimensions,
+} from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CarDetails from "./CarDetails";
-import { RootStackParamList } from "../Types/navigationTypes";
+import { NewsItem, RootStackParamList } from "../Types/navigationTypes";
 import NewsDetailsScreen from "./NewsDetailsScreen";
 import CarsScreen from "./CarsScreen";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { IconButton, Text } from "react-native-paper";
+import CarCard from "../components/CarCard";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -41,9 +50,7 @@ const HomeScreen = () => {
   };
 
   return (
-
     <ScrollView style={styles.container}>
-  
       <Text style={styles.title}>Autos</Text>
 
       <Text style={styles.subtitle}>Buscar Autos</Text>
@@ -79,21 +86,11 @@ const HomeScreen = () => {
       </View>
 
       <View style={styles.separator2} />
-
-      {/* CarCards */}
-      <CarCard />
-      <CarCard />
-      <CarCard />
-
-      {/* Más CarCards... */}
-      {/* ... */}
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-
-  
   container: {
     flex: 1,
     backgroundColor: "#fff",
@@ -108,8 +105,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     color: "#666",
-    marginTop :30,
-    margin:20,
+    marginTop: 30,
+    margin: 20,
   },
 
   searchContainer: {
@@ -117,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     padding: 10,
-    margin:10,
+    margin: 10,
   },
 
   separator1: {
@@ -129,7 +126,6 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     borderBottomColor: "#ddd",
     marginHorizontal: 10,
-    
   },
   searchInput: {
     borderWidth: 1,

@@ -1,31 +1,8 @@
-import { View, StyleSheet, Image, ScrollView } from "react-native";
-import React, { useState } from "react";
-import {
-  Button,
-  TextInput,
-  Text,
-  SegmentedButtons,
-  Portal,
-  Dialog,
-} from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import { ScrollView, View, Image, StyleSheet} from "react-native";
+import { Portal, Dialog, SegmentedButtons, Text, TextInput, Button } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
-import fetchImageFromUri from "../util/fetchImageFromURI";
-import { useNavigation } from '@react-navigation/native';
-import Insurance from './Insurance';
-import { createStackNavigator } from '@react-navigation/stack';
-
-const Stack = createStackNavigator();
-
-
-const AppNavigator = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Sell" component={Sell} />
-      <Stack.Screen name="Insurance" component={Insurance} />
-    </Stack.Navigator>
-  )
-}
-
 
 const Sell = () => {
 
@@ -239,7 +216,7 @@ const Sell = () => {
       <Button
         style={{ marginTop: 20, marginBottom: 30 }}
         mode="contained"
-        onPress={() => navigation.navigate('Insurance')} // Usa el nombre que le diste a la ruta Insurance
+        onPress={() => navigation.navigate("Insurance")} // Usa el nombre que le diste a la ruta Insurance
       >
         Ir a Seguro de Vehículo
       </Button>
@@ -276,4 +253,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppNavigator;
+export default Sell;

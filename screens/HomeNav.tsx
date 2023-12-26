@@ -1,15 +1,14 @@
 import { View, Text } from "react-native";
 import React, { useState } from "react";
 
-import { BottomNavigation } from "react-native-paper";
-import MatIcons from "@expo/vector-icons/MaterialIcons"
-import IonIcons from "@expo/vector-icons/Ionicons"
+import { createMaterialBottomTabNavigator } from 'react-native-paper/react-navigation';
 import Home from "./Home";
-import Sell from "./Sell";
+import SellNavigator from "./SellNavigator";
 import Account from "./Account";
 import News from "./News"; // Importa el componente de noticias aquí
 import { SafeAreaView } from "react-native-safe-area-context";
 
+const BottomNavigation = createMaterialBottomTabNavigator();
 
 const HomeNav = () => {
   const [index, setIndex] = useState(0);
@@ -27,16 +26,36 @@ const HomeNav = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <BottomNavigation
-        navigationState={{ index, routes }}
-        onIndexChange={setIndex}
-        renderScene={BottomNavigation.SceneMap({
-          home: Home,
-          sell: Sell,
-          account: Account,
-          news: News, // Agrega el componente de Noticias
-        })}
-      />
+      <BottomNavigation.Navigator>
+        <BottomNavigation.Screen
+          name="home"
+          component={Home}
+          options={{
+            tabBarIcon: "cart",
+          }}
+        />
+        <BottomNavigation.Screen
+          name="sell"
+          component={SellNavigator}
+          options={{
+            tabBarIcon: "cart-plus",
+          }}
+        />
+        <BottomNavigation.Screen
+          name="account"
+          component={Account}
+          options={{
+            tabBarIcon: "account-circle",
+          }}
+        />
+        <BottomNavigation.Screen
+          name="news"
+          component={News}
+          options={{
+            tabBarIcon: "newspaper-variant-multiple",
+          }}
+        />
+      </BottomNavigation.Navigator>
     </SafeAreaView>
   );
 };
