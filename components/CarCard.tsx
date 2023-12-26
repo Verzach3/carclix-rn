@@ -2,8 +2,9 @@ import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { Button, Card } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import { Vehicle } from "../Types/vehicle";
 
-const CarCard = () => {
+const CarCard = ({ vehicle }: { vehicle: Vehicle }) => {
   const navigation = useNavigation<any>();
   return (
     <View>
@@ -15,9 +16,9 @@ const CarCard = () => {
           style={{ borderRadius: 5 }}
           source={{ uri: "https://picsum.photos/700" }}
         />
-        <Card.Title title="Titulo del auto" subtitle="Subtitulo del auto" />
+        <Card.Title title={`${vehicle.vehicle_maker} ${vehicle.vehicle_model}`} subtitle={vehicle.vehicle_maker} />
         <Card.Content>
-          <Text>$ 100,000</Text>
+          <Text>$ {vehicle.purchase_price}</Text>
         </Card.Content>
         <Card.Actions>
           <Button

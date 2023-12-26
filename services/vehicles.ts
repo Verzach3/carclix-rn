@@ -1,6 +1,6 @@
 import axios from "axios"
-import { processColor } from "react-native-reanimated"
+import { SERVER_URL } from "../constants"
 export async function getVehicles() {
-    const res = await axios.get(process.env.SERVER_URL + "/vehicles")
+    const res = await axios.get(SERVER_URL + "/vehicles/all")
     return res
 }
