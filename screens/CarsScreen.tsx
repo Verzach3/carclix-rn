@@ -1,9 +1,16 @@
 import { useEffect, useState } from "react";
 import { getVehicles } from "../services/vehicles";
 import { ScrollView } from "react-native-gesture-handler";
-import { Appbar, IconButton, TextInput, Text } from "react-native-paper";
+import {
+  Appbar,
+  IconButton,
+  TextInput,
+  Text,
+  Divider,
+  Icon,
+} from "react-native-paper";
 import CarCard from "../components/CarCard";
-import { StyleSheet, View, useWindowDimensions } from "react-native";
+import { StyleSheet, useWindowDimensions } from "react-native";
 import { Vehicle } from "../Types/vehicle";
 import { useNavigation } from "@react-navigation/native";
 import { NewsItem } from "../Types/navigationTypes";
@@ -24,7 +31,7 @@ const CarsScreen = () => {
     }
   };
 
-    const [activeSlide, setActiveSlide] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [mileage, setMileage] = useState("");
@@ -44,39 +51,15 @@ const CarsScreen = () => {
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Autos</Text>
 
-      <Text style={styles.subtitle}>Buscar Autos</Text>
-      <View style={styles.separator1} />
-      {/* Contenedor de Búsqueda */}
-      <View style={styles.searchContainer}>
-        <TextInput
-          placeholder="Modelo"
-          value={model}
-          onChangeText={setModel}
-          style={styles.searchInput}
-        />
-        <TextInput
-          placeholder="Año"
-          value={year}
-          keyboardType="number-pad"
-          onChangeText={setYear}
-          style={styles.searchInput}
-        />
-        <TextInput
-          placeholder="Kilometraje"
-          value={mileage}
-          keyboardType="number-pad"
-          onChangeText={setMileage}
-          style={styles.searchInput}
-        />
-        <IconButton
-          icon="magnify"
-          size={30}
-          onPress={handleSearch}
-          style={styles.searchButton}
-        />
-      </View>
+      <TextInput
+        style={{ backgroundColor: "#fff" }}
+        contentStyle={{ fontSize: 20, fontWeight: "bold",}}
+        placeholder="Buscar Autos"
+        right={<TextInput.Icon icon="magnify" />}
+      />
+      <Divider bold />
 
-      <View style={styles.separator2} />
+      <Divider bold />
       {vehicles.map((vehicle: Vehicle) => {
         return <CarCard key={vehicle.id} vehicle={vehicle} />;
       })}
@@ -108,7 +91,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     padding: 10,
-    margin: 10,
   },
 
   separator1: {

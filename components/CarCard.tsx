@@ -10,8 +10,12 @@ const CarCard = ({ vehicle }: { vehicle: Vehicle }) => {
   const [vehicleImageId, setVehicleImageId] = useState("");
   useEffect(() => {
     const getVehicleImage = async () => {
-      const data = await getImagesById(vehicle.id);
-      setVehicleImageId(data.data[0].id);
+      try {
+        const data = await getImagesById(vehicle.id);
+        setVehicleImageId(data.data[0].id);
+      } catch (error) {
+        console.log(error);
+      }
     };
     getVehicleImage();
   });
@@ -19,9 +23,11 @@ const CarCard = ({ vehicle }: { vehicle: Vehicle }) => {
     <View>
       <Card
         style={{ marginHorizontal: 10, marginVertical: 10, borderRadius: 0 }}
-        onPress={() => navigation.navigate("CarDetails", {
-          vehicleId: vehicle.id,
-        })}
+        onPress={() =>
+          navigation.navigate("CarDetails", {
+            vehicleId: vehicle.id,
+          })
+        }
       >
         <Card.Cover
           style={{ borderRadius: 0 }}

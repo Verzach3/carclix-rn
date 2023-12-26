@@ -48,6 +48,9 @@ const CarDetails = ({ route, navigation }: { route: any; navigation: any }) => {
             source={{
               uri: `${SERVER_URL}/vehicles/images/one/${vehicleImages[index].id}`,
             }}
+            style={{
+              width: dimensions.width,
+            }}
           />
         )}
       />
