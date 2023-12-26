@@ -10,10 +10,29 @@ import {
 } from "react-native-paper";
 import * as ImagePicker from "expo-image-picker";
 import fetchImageFromUri from "../util/fetchImageFromURI";
+import { useNavigation } from '@react-navigation/native';
+import Insurance from './Insurance';
+import { createStackNavigator } from '@react-navigation/stack';
+
+const Stack = createStackNavigator();
+
+
+const AppNavigator = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Sell" component={Sell} />
+      <Stack.Screen name="Insurance" component={Insurance} />
+    </Stack.Navigator>
+  )
+}
+
 
 const Sell = () => {
+
+  const navigation = useNavigation<any>();
   const [image, setImage] = useState<string[]>([]);
   const [model, setModel] = useState<string>("");
+  const [kilometraje, setKilometraje] = useState<string>("");
   const [price, setPrice] = useState<string>("");
   const [color, setColor] = useState<string>("");
   const [condition, setCondition] = useState<string>("");
@@ -42,6 +61,7 @@ const Sell = () => {
   const handleSubmission = async () => {
     const data = new FormData();
     data.append("model", model);
+    data.append("kilometraje", kilometraje);
     data.append("price", price);
     data.append("color", color);
     data.append("condition", condition);
@@ -101,7 +121,7 @@ const Sell = () => {
           </Dialog.Actions>
         </Dialog>
       </Portal>
-      <Text variant="headlineMedium"> Vende tu auto</Text>
+      <Text style={styles.title}>Registra tu carro</Text>
       <TextInput
         value={model}
         onChangeText={(text) => setModel(text)}
@@ -109,6 +129,14 @@ const Sell = () => {
         style={styles.inputs}
         label={"Modelo"}
         placeholder="El modelo de tu auto"
+      />
+      <TextInput
+        value={kilometraje}
+        onChangeText={(text) => setModel(text)}
+        mode="outlined"
+        style={styles.inputs}
+        label={"Kilometraje"}
+        placeholder="El Kilometraje de tu auto"
       />
       <TextInput
         value={price}
@@ -207,11 +235,29 @@ const Sell = () => {
       >
         Publicar
       </Button>
+
+      <Button
+        style={{ marginTop: 20, marginBottom: 30 }}
+        mode="contained"
+        onPress={() => navigation.navigate('Insurance')} // Usa el nombre que le diste a la ruta Insurance
+      >
+        Ir a Seguro de Vehículo
+      </Button>
+
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 20,
+    margin: 20
+  },
+
   container: {
     padding: 20,
     flex: 1,
@@ -230,4 +276,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Sell;
+export default AppNavigator;
